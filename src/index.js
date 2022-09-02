@@ -16,7 +16,7 @@ const rootElement = document.getElementById('root');
 const root = createRoot(rootElement);
 
 Sentry.init({
-  dsn: 'https://73df6f3bf6304f518d809cc18f287daa@o58488.ingest.sentry.io/6711675',
+  dsn: 'https://73df6f3bf6304f518d809cc18f287daa@sentry.io/6711675',
   integrations: [
     new BrowserTracing({
       routingInstrumentation: Sentry.reactRouterV6Instrumentation(

@@ -21,6 +21,11 @@ function Home() {
 }
 
 function About() {
+  const transaction = Sentry.startTransaction({ name: 'test-transaction' });
+  const span = transaction.startChild({ op: 'functionX' }); // This function returns a Span
+  // functionCallX
+  span.finish(); // Remember that only finished spans will be sent with the transaction
+  transaction.finish(); // Finishing the transaction will send it to Sentry
   return (
     <>
       <main>
@@ -38,6 +43,13 @@ export default function App() {
     <div>
       <h1>Hello StackBlitz and Sentry!</h1>
       <p>Start editing to see some magic happen :)</p>
+      <button
+        onClick={() => {
+          throw new Error('foo error');
+        }}
+      >
+        error
+      </button>
       <SentryRoutes>
         <Route path="/" element={<Home />} />
         <Route path="about" element={<About />} />
