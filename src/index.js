@@ -60,6 +60,17 @@ root.render(
     一个例子是op: db.query, description: SELECT * FROM users WHERE last_active < %s, status: 200, tags: { name: '', table: '', function: middleware.auth.is_authenticated }
   span不能单独发送给sentry，当transaction结束时会整体发送给sentry
 
+ 作用域 scope
+  scope可以看作是transaction的上下文，可以设置user，tags，fingerprint, level,transactionName, context, span, breadcrumbs等，也可以调用addEventProcessor来注册处理事件回调
+  
+  例如：Sentry.configureScope(function(scope) {
+    scope.setTag("my-tag", "my value");
+    scope.setUser({
+      id: 42,
+      email: "john.doe@example.com",
+    });
+  });
+
  添加性能指标：
   const transaction = Sentry.getCurrentHub().getScope().getTransaction();
 
